@@ -61,6 +61,9 @@ For the `setv` to work correctly, the following signals MUST MUST MUST be tied t
 If this is not done, then the algortihm that makes sure the voltage is correct will not work because it is not
 sensing the output volatge from the DAC.
 
+To do this, you will have to remove the jumpers on the Waveshare board that ties ADC0 and ADC1 to the potentiometer and photo resistor. You will also need to pull the jumpers that
+connect DAC0/DAC1 to the on-board LEDs.
+
 ## GET /getv/:channel
 Gets the voltage (and integer representation of the hex value) of a specific ADC channel (0..7).
 
