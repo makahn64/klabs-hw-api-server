@@ -1,0 +1,11 @@
+[Service]
+WorkingDirectory=/opt/klabs/klabs-hw-api-server
+ExecStart=python3 /opt/klabs/klabs-hw-api-server/index.py
+Restart=always
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=klabsapi
+User=root
+Group=root
+[Install]
+WantedBy=multi-user.target
