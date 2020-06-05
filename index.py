@@ -8,7 +8,9 @@ from drivers.waveshare_definitions import *
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
 
-PI_HOST = 'klabs.local'
+#PI_HOST = 'klabs.local'
+# To run on the Pi itself (instead of connecting over pipe), leave PI_HOST blank.
+PI_HOST = ''
 ws = None
 
 html_response_header = '''
