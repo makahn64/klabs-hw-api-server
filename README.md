@@ -4,6 +4,15 @@ This is a tiny Flask-based server meant as a shim between the real server writte
 hardware drivers written in Python. I am by no means a Python pro, in fact, I am not a fan. So this API is as minimal as possible for now
 and only has a few methods.
 
+## Installation
+1. Clone the repo into the `/opt/klabs` folder. Folder must have root permission. You will end up
+with a path `/opt/klabs/klabs-hw-api-server`
+2. Copy the `klabsapi.service` file to /etc/systemd/system folder (as root). `cp klabsapi.service /etc/systemd/system/`
+3. `chmod u+rwx /etc/systemd/system/klabsapi.service` as root.
+4. `systemctl enable klabsapi` then reboot.
+
+From a browser, check the install by browsing to the Pi's address port 5000.
+
 ## GET /
 Returns an HTML page showing the server is running and the connection status to the underlying PIGPIO daemon on the Pi.
 
