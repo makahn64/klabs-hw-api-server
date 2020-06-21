@@ -1,4 +1,5 @@
 import flask
+from flask_cors import CORS
 import sys
 import os
 from flask import request, jsonify
@@ -6,11 +7,12 @@ from drivers.Waveshare_ADDA import WAVESHARE_ADDA
 from drivers.waveshare_definitions import *
 
 app = flask.Flask(__name__)
+CORS(app)
 app.config["DEBUG"] = True
 
-#PI_HOST = 'klabs.local'
+PI_HOST = 'klabs.local'
 # To run on the Pi itself (instead of connecting over pipe), leave PI_HOST blank.
-PI_HOST = ''
+#PI_HOST = ''
 ws = None
 
 html_response_header = '''
