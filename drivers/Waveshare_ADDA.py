@@ -15,7 +15,6 @@ from drivers.ADS1256_definitions import *
 from drivers.ADS1256_PiGPIO import ADS1256
 from drivers.waveshare_definitions import *
 
-
 class WAVESHARE_ADDA(object):
 
     @property
@@ -94,6 +93,23 @@ class WAVESHARE_ADDA(object):
         hexValue = self._adc.read_oneshot(input_pin)
         voltage = self.voltage_from_ADC(hexValue)
         return voltage, hexValue
+
+    def read_all(self):
+        sequence = [AD_CHANNEL_MAP['0'],
+                    AD_CHANNEL_MAP['1'],
+                    AD_CHANNEL_MAP['2'],
+                    AD_CHANNEL_MAP['3'],
+                    AD_CHANNEL_MAP['4'],
+                    AD_CHANNEL_MAP['5'],
+                    AD_CHANNEL_MAP['6'],
+                    AD_CHANNEL_MAP['7']
+                    ]
+        hexValues = self._adc.read_sequence(sequence)
+        rval = []
+        for hexVal in hexValues:
+            voltage = self.voltage_from_ADC(hexVal)
+            rval.append((voltage, hexVal))
+        return rval
 
     def close(self):
         self.pi.stop()

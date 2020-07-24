@@ -56,7 +56,7 @@ def connect():
             ws = WAVESHARE_ADDA(pi_host=PI_HOST)
             return jsonify({'status': 'online'})
         except OSError:
-            return jsonify({ 'error': 'could not connect to ' + PI_HOST}), 406
+            return jsonify({ 'error': 'could not connect to ' + PI_HOST}), 503
         except:
             # this is almost certainly "out of handles"
             # err = sys.exc_info()[0]
@@ -92,13 +92,23 @@ def set_voltage(channel_num, voltage, tolerance):
 
 @app.route('/getv/<channel_num>', methods=['GET'])
 def get_voltage(channel_num):
+
+    if not ws:
+        return jsonify({'error': 'hardware offline'}), 500
+
+    if channel_num == 'all':
+        readings = ws.read_all()
+        results = []
+        for r in readings:
+            results.append({"voltage": r[0], "raw": r[1]})
+        return jsonify(results)
+
     channel = AD_CHANNEL_MAP[channel_num]
     if not channel:
         return jsonify({"error": "No such channel " + channel_num}), 406
-    if ws:
-        voltage, hexValue = ws.read_voltage(channel)
-        return jsonify({"voltage": voltage, "raw": hexValue})
-    return jsonify({ 'error': 'hardware offline'}), 500
+
+    voltage, hexValue = ws.read_voltage(channel)
+    return jsonify({"voltage": voltage, "raw": hexValue})
 
 
 # @app.route('/test', methods=['GET'])
